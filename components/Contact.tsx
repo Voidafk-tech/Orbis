@@ -7,6 +7,7 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // In a real application, this would send data to info@orbisaccounting.ca via a backend service
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 5000);
   };
@@ -23,13 +24,13 @@ const Contact: React.FC = () => {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                   <span className="material-icons-outlined text-xl">email</span>
                 </div>
-                <span className="text-sm font-medium">hello@orbisaccounting.ca</span>
+                <a href="mailto:info@orbisaccounting.ca" className="text-sm font-medium hover:text-primary transition-colors">info@orbisaccounting.ca</a>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                   <span className="material-icons-outlined text-xl">call</span>
                 </div>
-                <span className="text-sm font-medium">+1 (800) 555-0192</span>
+                <a href="tel:6042037799" className="text-sm font-medium hover:text-primary transition-colors">604-203-7799</a>
               </div>
             </div>
           </div>
@@ -41,7 +42,7 @@ const Contact: React.FC = () => {
                   <span className="material-icons-outlined text-4xl">check_circle</span>
                 </div>
                 <h3 className="text-2xl font-bold">Message Sent!</h3>
-                <p className="text-gray-400">Thank you for reaching out. We'll be in touch soon.</p>
+                <p className="text-gray-400">Thank you for reaching out. Your request has been directed to <span className="text-primary font-medium">info@orbisaccounting.ca</span>. We'll be in touch soon.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">

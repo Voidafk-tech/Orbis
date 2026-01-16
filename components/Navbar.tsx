@@ -1,42 +1,54 @@
 
 import React, { useState } from 'react';
+import { Page } from '../App';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  navigate: (page: Page) => void;
+  currentPage: Page;
+}
+
+export const LogoGraphic: React.FC<{ className?: string }> = ({ className = "h-10 w-10" }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="45" fill="#82E05E" />
+    <circle cx="22" cy="50" r="14" fill="white" />
+    <circle cx="22" cy="50" r="7" fill="black" />
+  </svg>
+);
+
+const Navbar: React.FC<NavbarProps> = ({ navigate, currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Our Process', href: '#process' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+  const navLinks: { name: string; page: Page }[] = [
+    { name: 'Services', page: 'services' },
+    { name: 'Process', page: 'process' },
+    { name: 'About', page: 'about' },
   ];
 
   return (
-    <nav className="fixed w-full z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+    <nav className="fixed w-full top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <div className="flex items-center gap-2">
-            <img 
-              alt="Orbis Accounting Logo" 
-              className="h-10 w-auto" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTjEOQsGsuIwLyuI-2YIttgTiVrS2OZPh-riEDo8ExRW5oKvOTbl-TKtcoz4ocoqvsVLEKzWOGeqbkne6x2n9MTnMs2V87lz3zQyqPV-PXXxtM1Awn9qUhstHYtdFu0nd04xEAOWw3q7Bmp03HjCAmauqXD-9kx145RXJc4TUC-ofAGqHI0pl_nayyrGxYsg-_L904-LCxKnyXv51Cz0UYQ1CbZlfAzkT_g5s3kt_cPTmyMlc5JJ0os3X1IYWkkxbUGyjjLqIs-Z4" 
-            />
+          <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate('home')}>
+            <LogoGraphic className="h-12 w-12 group-hover:scale-110 transition-transform" />
           </div>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a 
+              <button 
                 key={link.name}
-                className="text-sm font-medium hover:text-primary transition-colors" 
-                href={link.href}
+                onClick={() => navigate(link.page)}
+                className={`text-sm font-medium transition-colors hover:text-primary ${currentPage === link.page ? 'text-primary underline underline-offset-4' : ''}`} 
               >
                 {link.name}
-              </a>
+              </button>
             ))}
-            <a className="px-5 py-2.5 bg-primary text-gray-900 font-bold rounded-full hover:brightness-110 transition-all text-sm" href="#consultation">
+            <button 
+              onClick={() => navigate('contact')}
+              className="px-5 py-2.5 bg-primary text-gray-900 font-bold rounded-full hover:brightness-110 transition-all text-sm"
+            >
               Consultation
-            </a>
+            </button>
           </div>
 
           {/* Mobile Toggle */}
@@ -56,23 +68,27 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-background-light dark:bg-background-dark border-b border-gray-100 dark:border-gray-800 px-4 py-6 space-y-4 shadow-xl">
+          <button 
+            className="block w-full text-left text-lg font-medium hover:text-primary transition-colors"
+            onClick={() => { navigate('home'); setIsMenuOpen(false); }}
+          >
+            Home
+          </button>
           {navLinks.map((link) => (
-            <a 
+            <button 
               key={link.name}
-              className="block text-lg font-medium hover:text-primary transition-colors" 
-              href={link.href}
-              onClick={() => setIsMenuOpen(false)}
+              className={`block w-full text-left text-lg font-medium hover:text-primary transition-colors ${currentPage === link.page ? 'text-primary' : ''}`}
+              onClick={() => { navigate(link.page); setIsMenuOpen(false); }}
             >
               {link.name}
-            </a>
+            </button>
           ))}
-          <a 
-            className="block px-5 py-3 bg-primary text-gray-900 font-bold rounded-xl text-center" 
-            href="#consultation"
-            onClick={() => setIsMenuOpen(false)}
+          <button 
+            className="block w-full px-5 py-3 bg-primary text-gray-900 font-bold rounded-xl text-center" 
+            onClick={() => { navigate('contact'); setIsMenuOpen(false); }}
           >
             Get Started
-          </a>
+          </button>
         </div>
       )}
     </nav>

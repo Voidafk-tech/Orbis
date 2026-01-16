@@ -1,15 +1,17 @@
 
 import React from 'react';
+import { Page } from '../App';
 
 interface ServiceCardProps {
   icon: string;
   title: string;
   description: string;
   features: string[];
+  onClick: () => void;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, features }) => (
-  <div className="group p-8 bg-background-light dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
+const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, features, onClick }) => (
+  <div onClick={onClick} className="group cursor-pointer p-8 bg-background-light dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
     <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
       <span className="material-icons-outlined text-3xl">{icon}</span>
     </div>
@@ -26,7 +28,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, fea
   </div>
 );
 
-const Services: React.FC = () => {
+interface ServicesProps {
+  navigate: (page: Page) => void;
+}
+
+const Services: React.FC<ServicesProps> = ({ navigate }) => {
   const services = [
     {
       icon: 'receipt_long',
@@ -57,7 +63,7 @@ const Services: React.FC = () => {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, idx) => (
-            <ServiceCard key={idx} {...service} />
+            <ServiceCard key={idx} {...service} onClick={() => navigate('services')} />
           ))}
         </div>
       </div>

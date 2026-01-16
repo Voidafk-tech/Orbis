@@ -15,7 +15,7 @@ const FAQ: React.FC = () => {
     },
     {
       q: "Are you fully remote?",
-      a: "Yes, we operate as a fully digital accounting partner, utilizing secure cloud-based systems like Xero, QuickBooks Online, and Dext."
+      a: "Yes, we operate as a fully digital accounting partner, utilizing industry-standard systems like Sage50 and QuickBooks Online (QBO)."
     },
     {
       q: "How quickly can we get started?",

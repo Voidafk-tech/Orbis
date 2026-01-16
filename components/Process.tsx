@@ -1,7 +1,12 @@
 
 import React from 'react';
+import { Page } from '../App';
 
-const Process: React.FC = () => {
+interface ProcessProps {
+  navigate: (page: Page) => void;
+}
+
+const Process: React.FC<ProcessProps> = ({ navigate }) => {
   const steps = [
     {
       title: 'Discovery',
@@ -26,11 +31,11 @@ const Process: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-white dark:bg-background-dark" id="process">
+    <section className="py-24 bg-white dark:bg-background-dark cursor-pointer" id="process" onClick={() => navigate('process')}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-display font-bold mb-4">Our Streamlined Process</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">From messy ledgers to crystal-clear financial strategy in four simple steps.</p>
+          <p className="text-gray-400 max-w-2xl mx-auto">From messy ledgers to crystal-clear financial strategy in four simple steps. <span className="text-primary font-bold">Learn more →</span></p>
         </div>
         <div className="grid md:grid-cols-4 gap-8 relative">
           <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gray-100 dark:bg-gray-800 -z-10"></div>

@@ -1,7 +1,12 @@
 
 import React from 'react';
+import { Page } from '../App';
 
-const CTA: React.FC = () => {
+interface CTAProps {
+  navigate: (page: Page) => void;
+}
+
+const CTA: React.FC<CTAProps> = ({ navigate }) => {
   return (
     <section className="py-24" id="consultation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,9 +20,12 @@ const CTA: React.FC = () => {
               Join 200+ businesses who trust Orbis Accounting for their strategic growth. Let's discuss your roadmap today.
             </p>
             <div className="flex justify-center">
-              <a className="px-10 py-5 bg-primary text-gray-900 font-extrabold rounded-2xl hover:scale-105 transition-transform text-lg shadow-xl shadow-primary/20" href="#">
+              <button 
+                onClick={() => navigate('contact')}
+                className="px-10 py-5 bg-primary text-gray-900 font-extrabold rounded-2xl hover:scale-105 transition-transform text-lg shadow-xl shadow-primary/20"
+              >
                 Book Your Consultation
-              </a>
+              </button>
             </div>
           </div>
         </div>

@@ -1,20 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Services from './components/Services';
-import Stats from './components/Stats';
-import Process from './components/Process';
-import About from './components/About';
-import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ';
-import Contact from './components/Contact';
-import CTA from './components/CTA';
 import Footer from './components/Footer';
 import ThemeToggle from './components/ThemeToggle';
-import ChatBot from './components/ChatBot';
+import Home from './pages/Home';
+import ServicesPage from './pages/ServicesPage';
+import ProcessPage from './pages/ProcessPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import GrowthPage from './pages/GrowthPage';
+
+export type Page = 'home' | 'services' | 'process' | 'about' | 'contact' | 'growth';
 
 const App: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<Page>('home');
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('theme') === 'dark' || 
@@ -33,25 +32,33 @@ const App: React.FC = () => {
     }
   }, [isDark]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   const toggleTheme = () => setIsDark(prev => !prev);
+  const navigate = (page: Page) => setCurrentPage(page);
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home': return <Home navigate={navigate} />;
+      case 'services': return <ServicesPage navigate={navigate} />;
+      case 'process': return <ProcessPage navigate={navigate} />;
+      case 'about': return <AboutPage navigate={navigate} />;
+      case 'contact': return <ContactPage navigate={navigate} />;
+      case 'growth': return <GrowthPage navigate={navigate} />;
+      default: return <Home navigate={navigate} />;
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <Navbar />
-      <main className="flex-grow">
-        <Hero />
-        <Services />
-        <Stats />
-        <Process />
-        <About />
-        <Testimonials />
-        <FAQ />
-        <Contact />
-        <CTA />
+      <Navbar navigate={navigate} currentPage={currentPage} />
+      <main className="flex-grow pt-20">
+        {renderPage()}
       </main>
-      <Footer />
+      <Footer navigate={navigate} />
       <ThemeToggle isDark={isDark} toggle={toggleTheme} />
-      <ChatBot />
     </div>
   );
 };
