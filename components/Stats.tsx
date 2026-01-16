@@ -3,7 +3,7 @@ import React from 'react';
 
 const Stats: React.FC = () => {
   const stats = [
-    { value: '15+', label: 'Years Experience' },
+    { value: '10+', label: 'Years Experience' },
     { value: '10+', label: 'B2B Clients' },
     { value: '100%', label: 'Audit Accuracy' },
     { value: '$10M+', label: 'Managed Annually' },
